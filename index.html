@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Losowanie sparingów Taekwondo</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4 text-center app-title">Losowanie sparingów Taekwondo</h1>
+
+        <!-- Instrukcja -->
+        <div class="alert alert-info mb-3 small-alert">
+            <h6>Instrukcja:</h6>
+            <ol class="mb-2">
+                <li>Skopiuj i wklej listę zawodników z Excela (format: imię, nazwisko, waga).</li>
+                <li>Wybierz maksymalną różnicę wag między zawodnikami (domyślnie 5 kg).</li>
+                <li>Wybierz liczbę walk dla każdego zawodnika (domyślnie 2 walki).</li>
+                <li>Wybierz liczbę dostępnych mat (domyślnie 1 mata).</li>
+                <li>Kliknij przycisk "Losuj" aby wygenerować pary. Każdy zawodnik powinien mieć przynajmniej jedną walkę, a w przypadku braku przeciwnika, mogą wystąpić dodatkowe walki.</li>
+                <li>Losowanie może zostać wyeksportowane do Excela.</li>
+            </ol>
+            <p class="mb-1"><strong>Uwaga:</strong></p>
+            <ul class="mb-0 small">
+                <li>Zawodnicy bez możliwych przeciwników będą oznaczeni na <span class="text-danger">czerwono</span>.</li>
+                <li>Zawodnicy z większą liczbą walk niż wybrana będą oznaczeni na <span class="text-primary">niebiesko</span>.</li>
+            </ul>
+        </div>
+
+        <!-- Formularz i opcje -->
+        <div class="form-container">
+            <!-- Textarea -->
+            <div class="form-group">
+                <label for="athletesData">Dane zawodników:</label>
+                <textarea class="form-control" id="athletesData" rows="10" placeholder="Wklej dane zawodników (imię, nazwisko, waga)"></textarea>
+            </div>
+
+            <!-- Opcje i przyciski -->
+            <div class="options-container">
+                <!-- Opcje różnicy wag -->
+                <div class="mb-3">
+                    <label for="weightDifferenceRange" class="form-label">Maksymalna różnica wag: <span id="weightDifferenceValue">5 kg</span></label>
+                    <input type="range" class="form-range" id="weightDifferenceRange" min="1" max="10" value="5">
+                </div>
+
+                <!-- Opcje liczby walk -->
+                <div class="mb-3">
+                    <label class="d-block">Liczba walk:</label>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="numMatches" id="matches1" value="1">
+                        <label class="btn btn-outline-primary" for="matches1">1 walka</label>
+
+                        <input type="radio" class="btn-check" name="numMatches" id="matches2" value="2" checked>
+                        <label class="btn btn-outline-primary" for="matches2">2 walki</label>
+
+                        <input type="radio" class="btn-check" name="numMatches" id="matches3" value="3">
+                        <label class="btn btn-outline-primary" for="matches3">3 walki</label>
+
+                        <input type="radio" class="btn-check" name="numMatches" id="matches4" value="4">
+                        <label class="btn btn-outline-primary" for="matches4">4 walki</label>
+                    </div>
+                </div>
+
+                <!-- Opcje liczby mat -->
+                <div class="mb-3">
+                    <label class="d-block">Liczba mat:</label>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="numMats" id="mat1" value="1" checked>
+                        <label class="btn btn-outline-primary" for="mat1">1 mata</label>
+
+                        <input type="radio" class="btn-check" name="numMats" id="mat2" value="2">
+                        <label class="btn btn-outline-primary" for="mat2">2 maty</label>
+
+                        <input type="radio" class="btn-check" name="numMats" id="mat3" value="3">
+                        <label class="btn btn-outline-primary" for="mat3">3 maty</label>
+
+                        <input type="radio" class="btn-check" name="numMats" id="mat4" value="4">
+                        <label class="btn btn-outline-primary" for="mat4">4 maty</label>
+                    </div>
+                </div>
+
+                <!-- Przyciski akcji -->
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" id="generateButton" class="btn btn-primary">Losuj</button>
+                    <button type="button" id="clearButton" class="btn btn-warning">Wyczyść</button>
+                    <button type="button" id="exportButton" class="btn btn-success">Eksport</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela wyników -->
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Walka</th> <!-- Nowa kolumna dla numeru walki -->
+                        <th>Zawodnik 1</th>
+                        <th>Zawodnik 2</th>
+                        <th>Mata</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Stopka -->
+    <footer class="footer text-center mt-4">
+        <p>Autor - Wojciech Pyzel 2024</p>
+    </footer>
+</body>
+</html>
